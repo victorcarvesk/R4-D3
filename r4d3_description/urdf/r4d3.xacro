@@ -1,0 +1,6 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<robot name="R4-D3" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="core.xacro" />
+
+</robot>

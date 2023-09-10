@@ -1,0 +1,192 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="materials.xacro" />
+
+  <xacro:macro name="wheel" params="prefix side *origin *axis">
+    <link name="${prefix}_${side}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <cylinder radius="0.04" length="0.05" />
+        </geometry>
+        <material name="green" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <cylinder radius="0.04" length="0.05" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_${side}_wheel_joint" type="continuous">
+      <parent link="${prefix}_link" />
+      <child link="${prefix}_${side}_wheel_link" />
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="axis" />
+    </joint>
+  </xacro:macro>
+
+  <link name="base_footprint" />
+
+  <link name="base_link" />
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.95" />
+  </joint>
+
+  <link name="lower_link">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.5 0.5 0.5" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.5 0.5 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="lower_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="lower_link" />
+    <origin xyz="0 0 -0.25" />
+  </joint>
+
+  <link name="leg_back_out_link">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="leg_back_out_joint" type="fixed">
+    <parent link="lower_link" />
+    <child link="leg_back_out_link" />
+    <origin xyz="-0.18 0 -0.40" />
+  </joint>
+
+  <link name="leg_back_in_link">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="leg_back_in_joint" type="fixed">
+    <parent link="lower_link" />
+    <child link="leg_back_in_link" />
+    <origin xyz="-0.06 0 -0.40" />
+  </joint>
+
+  <link name="leg_front_in_link">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="leg_front_in_joint" type="fixed">
+    <parent link="lower_link" />
+    <child link="leg_front_in_link" />
+    <origin xyz="0.06 0 -0.40" />
+  </joint>
+
+  <link name="leg_front_out_link">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.4 0.5" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="leg_front_out_joint" type="fixed">
+    <parent link="lower_link" />
+    <child link="leg_front_out_link" />
+    <origin xyz="0.18 0 -0.40" />
+  </joint>
+
+  <xacro:wheel prefix="leg_back_out" side="right">
+    <origin xyz="0 -0.125 -0.25" rpy="${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+  <xacro:wheel prefix="leg_back_out" side="left">
+    <origin xyz="0 0.125 -0.25" rpy="-${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+  <xacro:wheel prefix="leg_back_in" side="right">
+    <origin xyz="0 -0.125 -0.25" rpy="${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+  <xacro:wheel prefix="leg_back_in" side="left">
+    <origin xyz="0 0.125 -0.25" rpy="-${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+  <xacro:wheel prefix="leg_front_in" side="right">
+    <origin xyz="0 -0.125 -0.25" rpy="${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+  <xacro:wheel prefix="leg_front_in" side="left">
+    <origin xyz="0 0.125 -0.25" rpy="-${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+  <xacro:wheel prefix="leg_front_out" side="right">
+    <origin xyz="0 -0.125 -0.25" rpy="${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+  <xacro:wheel prefix="leg_front_out" side="left">
+    <origin xyz="0 0.125 -0.25" rpy="-${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </xacro:wheel>
+
+
+</robot>
